@@ -145,7 +145,7 @@
             var dpwd = $('#dpwd').val()
             if (duser != '' && dpwd != '') {
                 var flag=true
-                var lspwd=localStorage.getItem('data')
+                var lspwd=localStorage.getItem('data')||'[]'
                 var get=JSON.parse(lspwd)
                 get.some(function(item,i){
                     if (item.name==duser&&item.mima==dpwd){
