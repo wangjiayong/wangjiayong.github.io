@@ -3,13 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="./vue/vue-2.4.0.js"></script>
     <script src="jquery/jquery.min.js"></script>
     <style>
+        #app{
+            width: 100%;
+        }
         .v-enter,
         .v-leave-to {
             opacity: 0;
@@ -21,19 +25,39 @@
             transition: all .5s ease;
         }
 
-        .wc {
-            width: 500px;
-            height: 250px;
-            margin: 0 auto;
-            background-color: aliceblue;
-            padding: 5px;
-            text-align: center;
+        @media screen and (max-width: 500px){
+            .wc {
+                width: 100%;
+                height: 250px;
+                margin: 0 auto;
+                background-color: aliceblue;
+                padding: 5px;
+                text-align: center;
+            }
+        }
+        @media screen and (min-width: 500px){
+            .wc {
+                width: 500px;
+                height: 250px;
+                margin: 0 auto;
+                background-color: aliceblue;
+                padding: 5px;
+                text-align: center;
+            }
+        }
+        @media screen and (max-width: 500px){
+            .rq {
+                width: 100%;
+                margin: 0 auto;
+            }
+        }
+        @media screen and (min-width: 500px){
+            .rq {
+                width: 500px;
+                margin: 0 auto;
+            }
         }
 
-        .rq {
-            width: 500px;
-            margin: 0 auto;
-        }
 
         .rq a {
             width: 49%;
