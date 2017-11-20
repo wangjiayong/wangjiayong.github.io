@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="./vue/vue-2.4.0.js"></script>
+    <script src="jquery/jquery.min.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(200px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all .5s ease;
+        }
+
+        .wc {
+            width: 500px;
+            height: 250px;
+            margin: 0 auto;
+            background-color: aliceblue;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .rq {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .rq a {
+            width: 49%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <div class='rq'>
+        <a type="button" class="btn btn-default" @click.prevent="comName='login'">登录</a>
+        <a type="button" class="btn btn-default" @click.prevent="comName='register'">注册</a>
+    </div>
+    <transition mode="out-in">
+        <component :is="comName"></component>
+    </transition>
+
+
+</div>
+<template id="loginid">
+    <div class='wc'>
+        <div class="input-group input-group-lg" style="margin-top: 15px;">
+            <span class="input-group-addon" id="sizing-addon1">用户名</span>
+            <input type="text" id='duser' required autofocus autocomplete class="form-control" placeholder="请输入用户名"
+                   aria-describedby="sizing-addon1">
+        </div>
+        <br>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" id="sizing-addon2">密&nbsp;&nbsp;&nbsp;码</span>
+            <input type="password" id='dpwd' class="form-control" placeholder="请输入密码" aria-describedby="sizing-addon2">
+        </div>
+        <button id='login' type="button" class="btn btn-primary" style='width: 80%;margin-top: 15px'>
+            登录
+        </button>
+    </div>
+</template>
+<template id="registerid">
+    <div class='wc'>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon">用户名</span>
+            <input type="text" id='zseur' class="form-control" placeholder="请输入用户名" aria-describedby="sizing-addon1">
+        </div>
+        <br>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon">设置密码</span>
+            <input type="password" id='zszpwd' class="form-control" placeholder="请输入密码"
+                   aria-describedby="sizing-addon2">
+        </div>
+        <br>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon">确认密码</span>
+            <input type="password" id='zqrpwd' class="form-control" placeholder="请输入密码"
+                   aria-describedby="sizing-addon2">
+        </div>
+        <button id='register' type="button" class="btn btn-primary" style='width: 80%;margin-top: 15px'>
+            注册
+        </button>
+    </div>
+</template>
+<script>
+
+    Vue.component('login', {
+        template: '#loginid',
+
+    })
+
+    Vue.component('register', {
+        template: '#registerid'
+    })
+
+    // 创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            // flag: false
+            comName: 'login',
+
+        },
+        methods: {}
+    });
+    $(function () {
+        //登录
+        $('#app').on('click','#login', function () {
+            var duser = $('#duser').val()
+            var dpwd = $('#dpwd').val()
+            if (duser != '' && dpwd != '') {
+                var flag=true
+                var lspwd=localStorage.getItem('data')
+                var get=JSON.parse(lspwd)
+                get.some(function(item,i){
+                    if (item.name==duser&&item.mima==dpwd){
+                        alert('登录成功')
+                        flag=false
+                        window.location.href='./lll.html'
+                        return false;
+                    }
+                })
+                if (flag){
+                    alert('用户名或密码不存在,请注册')
+                }
+            } else {
+                alert('用户名或密码不能为空')
+            }
+        })
+        //注册
+        $('#app').on('click','#register', function () {
+            var zseur = $('#zseur').val()
+            var zszpwd = $('#zszpwd').val()
+            var zqrpwd = $('#zqrpwd').val()
+            if (zszpwd != '' && zqrpwd != ''&&zszpwd==zqrpwd){
+                var obj={
+                    name:zseur,
+                    mima:zqrpwd
+                }
+                var json=localStorage.getItem('data')||'[]'
+                var ll=JSON.parse(json)
+                ll.push(obj)
+                localStorage.setItem('data',JSON.stringify(ll))
+                alert('注册成功')
+                location.reload()
+            }else if (zszpwd!=zqrpwd){
+                alert('两次密码不一样')
+            }else if (zseur==''){
+                alert('用户名不能为空')
+            }else if (zszpwd==''||zqrpwd==''){
+                alert('密码不能为空')
+            }
+        })
+    })
+</script>
+</body>
+
+</html>
